@@ -1,11 +1,13 @@
 ﻿using System;
 using FoodForThought.Abstractions;
+using Newtonsoft.Json;
 
 
 namespace FoodForThought.Models
 {
+
 	public class GroceryItem : TableData
-	{
+	{		
 		public string Name { get; set; }
 		public GroceryState State { get; set; }
 		public DateTimeOffset? StateDate { get; set; }

@@ -66,10 +66,10 @@ namespace FoodForThought.ViewModels
 			{
 				
 				List<GroceryItem> list = new List<GroceryItem>();
-				list.Add(new GroceryItem() { Name = "Hawaiian Chips" });
-				list.Add(new GroceryItem() { Name = "Jerky" });
-				list.Add(new GroceryItem() { Name = "Coffee" });
-				list.Add(new GroceryItem() { Name = "Apples" });
+				list.Add(new GroceryItem() { Name = "GL-Hawaiian Chips" });
+				list.Add(new GroceryItem() { Name = "GL-Jerky" });
+				list.Add(new GroceryItem() { Name = "GL-Coffee" });
+				list.Add(new GroceryItem() { Name = "GL-Apples" });
 
 
 
