@@ -19,5 +19,10 @@ namespace fft_mobileapp.Controllers
         {
             return "Hello World!";
         }
+
+        public string Hello()
+        {
+            return "It's working";
+        }
     }
 }
