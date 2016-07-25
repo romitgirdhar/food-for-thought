@@ -14,6 +14,7 @@ namespace FoodForThought.Models
 		public int Quantity { get; set; }
 		public DateTimeOffset? ExpiryDate { get; set; }
 		public string PictureUrl { get; set; }
+		public string Upc { get; set; }
 	}
 }
 

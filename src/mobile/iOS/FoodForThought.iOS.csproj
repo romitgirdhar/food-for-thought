@@ -120,6 +120,21 @@
     <Reference Include="Microsoft.WindowsAzure.Mobile.Ext">
       <HintPath>..\packages\Microsoft.Azure.Mobile.Client.2.1.0\lib\Xamarin.iOS10\Microsoft.WindowsAzure.Mobile.Ext.dll</HintPath>
     </Reference>
+    <Reference Include="zxing.portable">
+      <HintPath>..\packages\ZXing.Net.Mobile.2.1.13\lib\Xamarin.iOS10\zxing.portable.dll</HintPath>
+    </Reference>
+    <Reference Include="ZXing.Net.Mobile.Core">
+      <HintPath>..\packages\ZXing.Net.Mobile.2.1.13\lib\Xamarin.iOS10\ZXing.Net.Mobile.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="ZXingNetMobile">
+      <HintPath>..\packages\ZXing.Net.Mobile.2.1.13\lib\Xamarin.iOS10\ZXingNetMobile.dll</HintPath>
+    </Reference>
+    <Reference Include="ZXing.Net.Mobile.Forms">
+      <HintPath>..\packages\ZXing.Net.Mobile.Forms.2.1.13\lib\Xamarin.iOS10\ZXing.Net.Mobile.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="ZXing.Net.Mobile.Forms.iOS">
+      <HintPath>..\packages\ZXing.Net.Mobile.Forms.2.1.13\lib\Xamarin.iOS10\ZXing.Net.Mobile.Forms.iOS.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FoodForThought\FoodForThought.csproj">
@@ -145,6 +160,9 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\camera.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <Import Project="..\packages\Xamarin.Forms.2.0.1.6495\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets" Condition="Exists('..\packages\Xamarin.Forms.2.0.1.6495\build\portable-win+net45+wp80+win81+wpa81+MonoAndroid10+MonoTouch10+Xamarin.iOS10\Xamarin.Forms.targets')" />
