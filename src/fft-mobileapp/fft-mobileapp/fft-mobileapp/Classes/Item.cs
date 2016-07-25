@@ -7,10 +7,10 @@ namespace fft_mobileapp.Classes
 {
     class Item
     {
-        string barcode { get; set; }
-        string description { get; set; }
-        string size { get; set; }
-        string issuingCountry { get; set; }
+        public string barcode { get; set; }
+        public string description { get; set; }
+        public string size { get; set; }
+        public string issuingCountry { get; set; }
 
         public void setDesc(string desc)
         {
