@@ -1,12 +1,19 @@
-﻿using Xamarin.Forms;
+﻿using FoodForThought.Abstractions;
+using FoodForThought.Services;
+using Xamarin.Forms;
 
 namespace FoodForThought
 {
 	public partial class App : Application
 	{
+		public static ICloudService CloudService { get; set; }
+
 		public App()
 		{
 			InitializeComponent();
+
+			// Initialize the Cloud Service
+			CloudService = new AzureCloudService();
 
 			MainPage = new FoodForThoughtPage();
 		}
