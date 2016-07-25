@@ -2,6 +2,7 @@
 using FoodForThought.Services;
 using Xamarin.Forms;
 
+
 namespace FoodForThought
 {
 	public partial class App : Application
@@ -15,7 +16,8 @@ namespace FoodForThought
 			// Initialize the Cloud Service
 			CloudService = new AzureCloudService();
 
-			MainPage = new FoodForThoughtPage();
+			//MainPage = new FoodForThoughtPage();
+			MainPage = new NavigationPage(new Pages.EntryPage());
 		}
 
 		protected override void OnStart()

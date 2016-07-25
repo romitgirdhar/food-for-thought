@@ -32,6 +32,12 @@
   <ItemGroup>
     <EmbeddedResource Include="App.xaml" />
     <EmbeddedResource Include="FoodForThoughtPage.xaml" />
+    <EmbeddedResource Include="Pages\EntryPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pages\GroceriesList.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -47,6 +53,18 @@
     <Compile Include="Abstractions\BaseViewModel.cs" />
     <Compile Include="Services\AzureCloudService.cs" />
     <Compile Include="Services\AzureCloudTable.cs" />
+    <Compile Include="Pages\EntryPage.xaml.cs">
+      <DependentUpon>EntryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\EntryPageViewModel.cs" />
+    <Compile Include="Pages\GroceriesList.xaml.cs">
+      <DependentUpon>GroceriesList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\GroceriesListViewModel.cs" />
+    <Compile Include="Models\GroceryItem.cs" />
+    <Compile Include="Models\StateTransition.cs" />
+    <Compile Include="Abstractions\GroceryState.cs" />
+    <Compile Include="Helpers\ExceptionHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Net.Http">
@@ -83,6 +101,7 @@
     <Folder Include="Pages\" />
     <Folder Include="Services\" />
     <Folder Include="ViewModels\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
