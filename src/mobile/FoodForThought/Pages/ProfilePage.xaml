@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="FoodForThought.Pages.ProfilePage"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             Title="{Binding Title}">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label HorizontalOptions="FillAndExpand"
+                                       Text="{Binding Title}"
+                                       TextColor="#272832">
+                <Label.TextColor>
+                    <OnPlatform x:TypeArguments="Color"
+                                Android="#F3F3F3"
+                                WinPhone="#272832"
+                                iOS="#272832" />
+                </Label.TextColor>
+            </Label>
+        </StackLayout>
+		
+    </ContentPage.Content>
+</ContentPage>

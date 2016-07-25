@@ -11,8 +11,8 @@ namespace FoodForThought.ViewModels
 	{
 		public EntryPageViewModel()
 		{
-			//Title = "Food for Thought";
-			Title = App.DeviceId.ToString();
+			 Title = "Food for Thought";
+			//Title = App.DeviceId.ToString();
 		}
 
 		Command loginCmd;
@@ -26,7 +26,8 @@ namespace FoodForThought.ViewModels
 
 			try
 			{
-				Application.Current.MainPage = new NavigationPage(new Pages.GroceriesList());
+				//Application.Current.MainPage = new NavigationPage(new Pages.MainPageCS());
+				Application.Current.MainPage = new Pages.MainPageCS();
 			}
 			catch (Exception ex)
 			{
