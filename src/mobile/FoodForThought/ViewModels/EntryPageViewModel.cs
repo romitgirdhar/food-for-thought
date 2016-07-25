@@ -11,7 +11,8 @@ namespace FoodForThought.ViewModels
 	{
 		public EntryPageViewModel()
 		{
-			Title = "Food for Thought";
+			//Title = "Food for Thought";
+			Title = App.DeviceId.ToString();
 		}
 
 		Command loginCmd;

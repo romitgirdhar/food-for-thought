@@ -1,6 +1,7 @@
 ﻿using System;
 using FoodForThought.Abstractions;
 
+
 namespace FoodForThought.Models
 {
 	public class StateTransition : TableData

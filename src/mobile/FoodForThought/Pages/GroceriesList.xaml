@@ -16,5 +16,6 @@
                 </Label.TextColor>
             </Label>
         </StackLayout>
+		
     </ContentPage.Content>
 </ContentPage>
