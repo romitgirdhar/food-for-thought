@@ -5,7 +5,7 @@ using System.Web;
 
 namespace fft_mobileapp.Classes
 {
-    class Item
+    public class UPCLookupResponse
     {
         public string barcode { get; set; }
         public string description { get; set; }

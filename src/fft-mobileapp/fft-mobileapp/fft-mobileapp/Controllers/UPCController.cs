@@ -16,19 +16,18 @@ namespace fft_mobileapp.Controllers
     {
         //[Route("api/item/upc/{barcode}")]
         [HttpGet] //GET api/item/upc/011594022132
-        public string Get(string id)
+        public UPCLookupResponse Get(string id)
         {
             string rawResp = GetItem(id);
             if (rawResp != null)
             {
-                Item item = ParseResults(rawResp, id);
-                var test = JsonConvert.SerializeObject(item);
-                return test;
+                UPCLookupResponse item = ParseResults(rawResp, id);
+                return item;
             }
             else
             {
-                Item item = new Item();
-                return JsonConvert.SerializeObject(item);
+                UPCLookupResponse item = new UPCLookupResponse();
+                return item;
             }
         }
 
@@ -52,9 +51,9 @@ namespace fft_mobileapp.Controllers
             return null;
         }
 
-        private static Item ParseResults(string raw, string barcode)
+        private static UPCLookupResponse ParseResults(string raw, string barcode)
         {
-            Item item = new Item();
+            UPCLookupResponse item = new UPCLookupResponse();
             item.setBarcode(barcode);
             var tempString = raw.Split(new string[] { "<table class=\"data\">" }, StringSplitOptions.None);
             if(tempString.Length<2)
