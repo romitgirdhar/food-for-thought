@@ -38,10 +38,10 @@
     <EmbeddedResource Include="Pages\GroceriesList.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pages\MainPageCS.xaml">
+    <EmbeddedResource Include="Pages\MasterPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Include="Pages\MasterPage.xaml">
+    <EmbeddedResource Include="Pages\MenuPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="Pages\PantryList.xaml">
@@ -79,11 +79,11 @@
     <Compile Include="Helpers\ExceptionHandler.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Models\UserStats.cs" />
-    <Compile Include="Pages\MainPageCS.xaml.cs">
-      <DependentUpon>MainPageCS.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\MasterPage.xaml.cs">
       <DependentUpon>MasterPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\MenuPage.cs">
+      <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\PantryList.xaml.cs">
       <DependentUpon>PantryList.xaml</DependentUpon>

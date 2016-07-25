@@ -27,7 +27,7 @@ namespace FoodForThought.ViewModels
 			try
 			{
 				//Application.Current.MainPage = new NavigationPage(new Pages.MainPageCS());
-				Application.Current.MainPage = new Pages.MainPageCS();
+				Application.Current.MainPage = new Pages.MasterPage();
 			}
 			catch (Exception ex)
 			{

@@ -1,47 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using FoodForThought.Pages;
 using Xamarin.Forms;
 
 namespace FoodForThought.Pages
 {
-	public partial class MasterPageItem
+	public partial class MasterPage : MasterDetailPage
 	{
-		public string Title { get; set; }
-		public System.Type TargetType { get; set; }
-	}
-
-	public partial class MasterPage : ContentPage
-	{
-
-		public ListView ListView { get { return listView; } }
-
+		//MainPage masterPage;
 
 		public MasterPage()
 		{
+			//masterPage = new MainPage();
+			//Master = masterPage;
+			//Detail = new NavigationPage(new GroceriesList());
 			InitializeComponent();
 
-			var masterPageItems = new List<MasterPageItem>();
-			masterPageItems.Add(new MasterPageItem
-			{
-				Title = "Groceries",
-				//IconSource = "contacts.png",
-				TargetType = typeof(GroceriesList)
-			});
-			masterPageItems.Add(new MasterPageItem
-			{
-				Title = "Pantry",
-				//IconSource = "todo.png",
-				TargetType = typeof(PantryList)
-			});
-			masterPageItems.Add(new MasterPageItem
-			{
-				Title = "Profile",
-				//IconSource = "reminders.png",
-				TargetType = typeof(ProfilePage)
-			});
+			menuPage.ListView.ItemSelected += OnItemSelected;
+		}
 
-			listView.ItemsSource = masterPageItems;
+		void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+		{
+			var item = e.SelectedItem as MenuPageItem;
+			if (item != null)
+			{
+				Detail = new NavigationPage((Page)Activator.CreateInstance(item.TargetType));
+				menuPage.ListView.SelectedItem = null;
+				IsPresented = false;
+			}
 		}
 	}
 }
