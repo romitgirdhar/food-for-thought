@@ -50,6 +50,9 @@
     <EmbeddedResource Include="Pages\ProfilePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Pages\GroceryItemDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -93,6 +96,10 @@
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ProfilePageViewModel.cs" />
+    <Compile Include="Pages\GroceryItemDetailPage.xaml.cs">
+      <DependentUpon>GroceryItemDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\GroceryItemDetailPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Net.Http">
