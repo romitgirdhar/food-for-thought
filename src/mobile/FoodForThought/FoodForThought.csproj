@@ -65,6 +65,8 @@
     <Compile Include="Models\StateTransition.cs" />
     <Compile Include="Abstractions\GroceryState.cs" />
     <Compile Include="Helpers\ExceptionHandler.cs" />
+    <Compile Include="Models\UserProfile.cs" />
+    <Compile Include="Models\UserStats.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Net.Http">
