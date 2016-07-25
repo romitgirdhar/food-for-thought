@@ -9,10 +9,18 @@ namespace FoodForThought.ViewModels
 {
 	public class EntryPageViewModel : BaseViewModel
 	{
+		public string ZipCode { get; set; }
+
 		public EntryPageViewModel()
 		{
-			//Title = "Food for Thought";
-			Title = App.DeviceId.ToString();
+			 Title = "Food for Thought";
+			if (Application.Current.Properties.ContainsKey("ZipCode"))
+			{
+				ZipCode = Application.Current.Properties["ZipCode"].ToString();
+			}
+			else {
+				ZipCode = "98033";
+			}
 		}
 
 		Command loginCmd;
@@ -25,8 +33,13 @@ namespace FoodForThought.ViewModels
 			IsBusy = true;
 
 			try
-			{
-				Application.Current.MainPage = new NavigationPage(new Pages.GroceriesList());
+			{				
+				Application.Current.Properties["ZipCode"] = ZipCode;
+				Application.Current.SavePropertiesAsync();
+
+
+				//Application.Current.MainPage = new NavigationPage(new Pages.MainPageCS());
+				Application.Current.MainPage = new Pages.MasterPage();
 			}
 			catch (Exception ex)
 			{
