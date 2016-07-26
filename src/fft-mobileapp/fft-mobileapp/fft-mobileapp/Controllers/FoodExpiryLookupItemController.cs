@@ -27,9 +27,9 @@ namespace fft_mobileapp.Controllers
         }
         
         // GET tables/FoodExpiryLookupItem/Eggs
-        public SingleResult<FoodExpiryLookupItem> GetFoodExpiryLookupItem(string name)
+        public IQueryable<FoodExpiryLookupItem> GetFoodExpiryLookupItem(string name)
         {
-            return Lookup(name);
+            return Query().Where(x=>x.ProductName.Equals(name));
         }
     }
 }
