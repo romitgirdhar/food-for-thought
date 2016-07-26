@@ -50,6 +50,17 @@ namespace FoodForThought.Services
 			return response.groceryItems;
 		}
 
+		public async Task<JToken> AddGroceryItem(int userId, GroceryItem item)
+		{
+			AddGroceryItemRequest request = new AddGroceryItemRequest()
+			{
+				id = userId.ToString(),
+				groceryItems = new List<GroceryItem>() { item }
+			};
+			var response = await client.InvokeApiAsync<AddGroceryItemRequest, JToken>("Grocery", request, HttpMethod.Post, null);
+			return response;
+		}
+
 		//public async Task<GroceryItem> GetGroceryItemById(string groceryItemId)
 		//{
 		//	var response = await client.InvokeApiAsync<

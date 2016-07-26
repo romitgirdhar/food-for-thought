@@ -27,6 +27,19 @@ namespace FoodForThought.ViewModels
 		private GroceryItem _item;
 		private GroceryItemDetailMode mDetailMode;
 		private GroceryPageMode mPageMode;
+		private string mWarnInfo;
+
+		public string WarnInfo
+		{
+			get
+			{
+				return mWarnInfo;
+			}
+			set
+			{
+				SetProperty(ref mWarnInfo, value, "WarnInfo");
+			}
+		}
 
 		public GroceryItem Item
 		{
@@ -125,6 +138,46 @@ namespace FoodForThought.ViewModels
 			catch (Exception ex)
 			{
 				Debug.WriteLine($"[GroceryItemDetailPage] Error in AddNewItem: {ex.Message}");
+			}
+			finally
+			{
+				IsBusy = false;
+			}
+		}
+
+
+		//SaveItemCommand
+		Command saveItemCmd;
+		public Command SaveItemCommand => saveItemCmd ?? (saveItemCmd = new Command(async () => await ExecuteSaveItemCommand()));
+
+		async Task ExecuteSaveItemCommand()
+		{
+			if (IsBusy)
+				return;
+			IsBusy = true;
+
+			try
+			{
+				//Perform validation
+				if (Item.Name == "")
+				{
+					Device.BeginInvokeOnMainThread(() =>
+						{
+							WarnInfo = "Please enter an item name";
+						});
+					return;
+				}
+
+				//Save item
+				await App.CloudService.AddGroceryItem(App.user.UserId, Item);
+
+				MessagingCenter.Send<GroceryItemDetailPageViewModel>(this, "ItemsChanged");
+				var master = (MasterPage)Application.Current.MainPage;
+				await master.Detail.Navigation.PopAsync();
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine($"[GroceryItemDetailPage] Error in SaveItemCommand: {ex.Message}");
 			}
 			finally
 			{
