@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Specialized;
 using System.Collections.Generic;
+using System.Linq;
 using System.Diagnostics;
 using FoodForThought.Abstractions;
 using FoodForThought.Models;
@@ -66,19 +67,20 @@ namespace FoodForThought.ViewModels
 			try
 			{
 
-				List<GroceryItem> list = new List<GroceryItem>();
-				list.Add(new GroceryItem() { Name = "PAN-Hawaiian Chips" });
-				list.Add(new GroceryItem() { Name = "PAN-Jerky" });
-				list.Add(new GroceryItem() { Name = "PAN-Coffee" });
-				list.Add(new GroceryItem() { Name = "PAN-Apples" });
+				//List<GroceryItem> list = new List<GroceryItem>();
+				//list.Add(new GroceryItem() { Name = "PAN-Hawaiian Chips" });
+				//list.Add(new GroceryItem() { Name = "PAN-Jerky" });
+				//list.Add(new GroceryItem() { Name = "PAN-Coffee" });
+				//list.Add(new GroceryItem() { Name = "PAN-Apples" });
 
-
+				var dataList = await App.CloudService.GetGroceryItems(App.user.UserId);
+				dataList = dataList.Where(p => p.State == "Bought").ToArray();
 
 				//Uncomment when we start reading data from the server
 				//var table = App.CloudService.GetTable<GroceryItem>();
 				//var list = await table.ReadAllItemsAsync();
 				Items.Clear();
-				foreach (var item in list)
+				foreach (var item in dataList)
 					Items.Add(item);
 			}
 			catch (Exception ex)
