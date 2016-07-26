@@ -191,6 +191,7 @@
     <Compile Include="Classes\UPCLookupResponse.cs" />
     <Compile Include="Controllers\FoodExpiryLookupItemController.cs" />
     <Compile Include="Controllers\GroceryController.cs" />
+    <Compile Include="Controllers\RecipeController.cs" />
     <Compile Include="Controllers\TodoItemController.cs" />
     <Compile Include="Controllers\UPCController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />

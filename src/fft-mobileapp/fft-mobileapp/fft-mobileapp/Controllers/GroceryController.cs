@@ -38,11 +38,10 @@ namespace fft_mobileapp.Controllers
                     .Where(x => x.Id == Id);
 
             // If the user id doesn't exist, then return an error
-            if (groceryItemListQuery.ToList().Count() == 0)
+            if(groceryItemListQuery == null)
                 return Request.CreateResponse(HttpStatusCode.NotFound, "Unknown user id");
 
             // else return the data.
-
             return Request.CreateResponse(HttpStatusCode.OK, groceryItemListQuery.ToList().First());
         }
 
