@@ -129,6 +129,8 @@ namespace fft_mobileapp.Controllers
             try
             {
                 await this.client.ReplaceDocumentAsync(UriFactory.CreateDocumentUri(databaseName, groceryListCollection, data.Guid), groceryItemListOnDocument);
+
+                // TODO record state transition
             }
             catch (DocumentClientException de)
             {
@@ -139,19 +141,61 @@ namespace fft_mobileapp.Controllers
         }
 
         [HttpPut]
-        public HttpResponseMessage transitionGroceryItem(HttpRequestMessage data)
+        public async System.Threading.Tasks.Task<HttpResponseMessage> transitionGroceryItem(GroceryItemRequest data)
         {
-            // Check if the user id is provided.
+            // Check if the user id is made available.
+            if (data == null || data.Guid == null || data.Guid == "")
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Missing GUID");
+            }
 
-            // Check if the grocery item is made available.
+            // Check if the grocery item id is made available.
+            if (data.groceryItems.Count() == 0)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Nothing to delete from the grocery item list");
+            }
+
+            /*
+             * If the grocery item exists for the user, delete it.
+             * else return an error code.
+             */
+            FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
+
+            IQueryable<GroceryItemRequest> groceryItemListQuery = this.client.CreateDocumentQuery<GroceryItemRequest>(
+                    UriFactory.CreateDocumentCollectionUri(databaseName, groceryListCollection), queryOptions)
+                    .Where(x => x.Guid == data.Guid);
 
             /*
              * If the grocery item exists for the given user id, then change the state
              * and record the state transition.
              * 
              * else, return an error code.
-             */ 
-            return null;
+             */
+            GroceryItemRequest groceryItemListOnDocument = groceryItemListQuery.First();
+
+            foreach (GroceryItem itemOnRequest in data.groceryItems)
+            {
+                foreach (GroceryItem itemOnDocument in groceryItemListOnDocument.groceryItems)
+                {
+                    if (itemOnRequest.Name == itemOnDocument.Name)
+                    {
+                        itemOnDocument.State = itemOnRequest.State;
+                        break;
+                    }
+                }
+            }
+
+
+            try
+            {
+                await this.client.ReplaceDocumentAsync(UriFactory.CreateDocumentUri(databaseName, groceryListCollection, data.Guid), groceryItemListOnDocument);
+            }
+            catch (DocumentClientException de)
+            {
+                throw;
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, groceryItemListOnDocument);
         }
     }
 }
