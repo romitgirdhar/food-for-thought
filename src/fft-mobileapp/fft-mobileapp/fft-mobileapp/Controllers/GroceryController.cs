@@ -29,9 +29,7 @@ namespace fft_mobileapp.Controllers
             // Check to see if the GUID is provided.
             if (guid == null)
                 return Request.CreateResponse(HttpStatusCode.BadRequest, "Missing GUID");
-
-            // If GUID doesn't exist in the collection - then return error response
-
+            
             FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
 
             IQueryable<GroceryItemRequest> groceryItemListQuery = this.client.CreateDocumentQuery<GroceryItemRequest>(
@@ -46,7 +44,8 @@ namespace fft_mobileapp.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, groceryItemListQuery.First());
         }
 
-        public HttpResponseMessage insertGroceryItemToList(HttpRequestMessage data)
+        [HttpPost]
+        public HttpResponseMessage insertGroceryItemToList(GroceryItemRequest data)
         {
             // Check if the user id is available 
 
@@ -58,13 +57,9 @@ namespace fft_mobileapp.Controllers
              */
             return null;
         }
-
-        public HttpResponseMessage readGroceryItemFromList(HttpRequestMessage data)
-        {
-            return null;
-        }
         
-        public HttpResponseMessage deleteGroceryItemFromList(HttpRequestMessage data)
+        [HttpDelete]
+        public HttpResponseMessage deleteGroceryItemFromList(GroceryItemRequest data)
         {
             // Check if the user id is made available.
 
@@ -78,6 +73,7 @@ namespace fft_mobileapp.Controllers
             return null;
         }
 
+        [HttpPut]
         public HttpResponseMessage transitionGroceryItem(HttpRequestMessage data)
         {
             // Check if the user id is provided.
