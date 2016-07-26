@@ -189,13 +189,9 @@
   <ItemGroup>
     <Compile Include="App_Start\Startup.MobileApp.cs" />
     <Compile Include="Classes\UPCLookupResponse.cs" />
-<<<<<<< HEAD
-    <Compile Include="Controllers\GroceryController.cs" />
-=======
     <Compile Include="Controllers\FoodExpiryLookupItemController.cs" />
     <Compile Include="Controllers\GroceryController.cs" />
     <Compile Include="Controllers\RecipeController.cs" />
->>>>>>> addingFoodExpiryLookupItemController
     <Compile Include="Controllers\TodoItemController.cs" />
     <Compile Include="Controllers\UPCController.cs" />
     <Compile Include="Controllers\UpdateTagsController.cs" />
@@ -203,11 +199,8 @@
     <Compile Include="DataObjects\GroceryItem.cs" />
     <Compile Include="DataObjects\GroceryItemRequest.cs" />
     <Compile Include="DataObjects\TodoItem.cs" />
-<<<<<<< HEAD
     <Compile Include="DocumentDBDomainManager.cs" />
-=======
     <Compile Include="DataObjects\FoodExpiryLookupItem.cs" />
->>>>>>> addingFoodExpiryLookupItemController
     <Compile Include="Models\MobileServiceContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -229,6 +222,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\fft-mobileapp.pubxml" />
+    <None Include="Properties\PublishProfiles\foodforthought - Web Deploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
