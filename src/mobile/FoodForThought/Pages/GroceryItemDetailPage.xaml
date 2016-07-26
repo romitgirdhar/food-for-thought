@@ -10,6 +10,7 @@
 		    <RowDefinition Height="40" />
 		    <RowDefinition Height="40" />
 			<RowDefinition Height="40" />
+			<RowDefinition Height="40" />
 		  </Grid.RowDefinitions>
 		  <Grid.ColumnDefinitions>
 		    <ColumnDefinition Width="100" />
@@ -26,6 +27,19 @@
 			<Button Image="camera.png" 
 					Command="{Binding TakePictureOfUPCCommand}"
 					Grid.Row="3" Grid.Column="2"/>
+			<Label Text="State:" Grid.Row="4" Grid.Column="0" />
+			<Picker x:Name="State" 
+					SelectedIndex="{Binding Item.StateFromText}" 
+					HorizontalOptions="FillAndExpand"
+					Grid.Row="4" Grid.Column="1">
+		        <Picker.Items>
+		            <x:String>Listed</x:String> 
+		            <x:String>Bought</x:String>
+					<x:String>Consumed</x:String>
+					<x:String>Donated</x:String>
+					<x:String>Wasted</x:String>
+		        </Picker.Items>
+		    </Picker> 
 		</Grid>
 
 		

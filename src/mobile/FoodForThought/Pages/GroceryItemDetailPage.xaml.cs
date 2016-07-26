@@ -8,10 +8,10 @@ namespace FoodForThought.Pages
 {
 	public partial class GroceryItemDetailPage : ContentPage
 	{
-		public GroceryItemDetailPage(GroceryItem item = null)
+		public GroceryItemDetailPage(GroceryItemDetailPageViewModel.GroceryPageMode pageMode, GroceryItem item = null)
 		{
 			InitializeComponent();
-			BindingContext = new GroceryItemDetailPageViewModel(item);
+			BindingContext = new GroceryItemDetailPageViewModel(pageMode, item);
 		}
 	}
 }

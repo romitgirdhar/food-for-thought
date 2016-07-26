@@ -11,8 +11,22 @@ namespace FoodForThought.ViewModels
 {
 	public class GroceryItemDetailPageViewModel : BaseViewModel
 	{
+		public enum GroceryItemDetailMode
+		{
+			ViewItem,
+			AddItem
+		};
+
+		public enum GroceryPageMode
+		{
+			GroceryList,
+			PantryList
+		};
+
 		//public GroceryItem Item { get; set; }
 		private GroceryItem _item;
+		private GroceryItemDetailMode mDetailMode;
+		private GroceryPageMode mPageMode;
 
 		public GroceryItem Item
 		{
@@ -20,16 +34,29 @@ namespace FoodForThought.ViewModels
 			set { SetProperty(ref _item, value, "Item"); }
 		}
 
-		public GroceryItemDetailPageViewModel(GroceryItem item = null)
+
+		public GroceryItemDetailPageViewModel(GroceryPageMode pageMode, GroceryItem item = null)
 		{
+			mPageMode = pageMode;
 			if (item != null)
 			{
+				mDetailMode = GroceryItemDetailMode.ViewItem;
 				Item = item;
 				Title = item.Name;
 			}
 			else
 			{
-				Item = new GroceryItem { Name = "New Grocery Item" };
+				mDetailMode = GroceryItemDetailMode.AddItem;
+				Item = new GroceryItem { 
+					Name = "",
+					Quantity = 1
+				};
+
+				if (mPageMode == GroceryPageMode.GroceryList)
+					Item.State = Enum.GetName(typeof(GroceryState), GroceryState.Listed);
+				else if (mPageMode == GroceryPageMode.PantryList)
+					Item.State = Enum.GetName(typeof(GroceryState), GroceryState.Bought);
+
 				if (App.kADD_TESTING_UPC)
 				{
 					Item.Upc = App.k_TESTING_UPC;

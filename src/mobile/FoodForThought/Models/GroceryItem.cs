@@ -15,6 +15,14 @@ namespace FoodForThought.Models
 		public DateTimeOffset? ExpiryDate { get; set; }
 		public string PictureUrl { get; set; }
 		public string Upc { get; set; }
+
+		public int StateFromText
+		{
+			get
+			{
+				return (int)Enum.Parse(typeof(GroceryState), this.State);
+			}
+		}
 	}
 }
 

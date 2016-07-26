@@ -46,7 +46,10 @@ namespace FoodForThought.ViewModels
 				{
 					//Application.Current.MainPage.Navigation.PushAsync(new Pages.GroceryItemDetailPage(selectedItem));
 					var master = (MasterPage)Application.Current.MainPage;
-					master.Detail.Navigation.PushAsync(new Pages.GroceryItemDetailPage(selectedItem));
+					master.Detail.Navigation.PushAsync(
+						new Pages.GroceryItemDetailPage(
+							GroceryItemDetailPageViewModel.GroceryPageMode.GroceryList,
+                            selectedItem));
 
 
 					SelectedItem = null;
@@ -106,7 +109,8 @@ namespace FoodForThought.ViewModels
 				//await Application.Current.MainPage.Navigation.PushAsync(new Pages.GroceryItemDetailPage());
 
 				var master = (MasterPage)Application.Current.MainPage;
-				await master.Detail.Navigation.PushAsync(new Pages.GroceryItemDetailPage());
+				await master.Detail.Navigation.PushAsync(
+					new Pages.GroceryItemDetailPage(GroceryItemDetailPageViewModel.GroceryPageMode.GroceryList));
 			}
 			catch (Exception ex)
 			{
