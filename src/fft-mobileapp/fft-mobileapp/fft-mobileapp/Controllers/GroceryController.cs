@@ -22,6 +22,8 @@ namespace fft_mobileapp.Controllers
         private const string EndpointUri = "https://fftdocdb.documents.azure.com:443/";
         private const string PrimaryKey = "OnFhOKCaVz6bmXmQ8yypZTO2xebuKEaVtyBQXYb6dWxQ9drSyaf0YY46tKsWIwz7coJswu8eiSiD4ZXZ37Kb2w==";
         private DocumentClient client = new DocumentClient(new Uri(EndpointUri), PrimaryKey);
+        private string databaseName = "groceries";
+        private string groceryListCollection = "GroceryList";
 
         [HttpGet]
         public HttpResponseMessage Get(String guid)
@@ -33,44 +35,107 @@ namespace fft_mobileapp.Controllers
             FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
 
             IQueryable<GroceryItemRequest> groceryItemListQuery = this.client.CreateDocumentQuery<GroceryItemRequest>(
-                    UriFactory.CreateDocumentCollectionUri("groceries", "GroceryList"), queryOptions)
+                    UriFactory.CreateDocumentCollectionUri(databaseName, groceryListCollection), queryOptions)
                     .Where(x => x.Guid == guid);
 
-            if (groceryItemListQuery.Count() == 0)
-                return Request.CreateResponse(HttpStatusCode.OK, "Unknown GUID");
-
+            
             // else return the data.
 
             return Request.CreateResponse(HttpStatusCode.OK, groceryItemListQuery.First());
         }
 
         [HttpPost]
-        public HttpResponseMessage insertGroceryItemToList(GroceryItemRequest data)
+        public async System.Threading.Tasks.Task<HttpResponseMessage> insertGroceryItemToList(GroceryItemRequest data)
         {
             // Check if the user id is available 
+            if (data == null || data.Guid == null || data.Guid == "")
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Missing GUID");
+            }
 
-            // Check if the grocery name is availale 
+            if (data.groceryItems.Count() == 0)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Nothing to insert to Document DB");
+            }
+
+            // Check if the grocery name is availale
+            List<GroceryItem> enrichedList = new List<GroceryItem>();
+
+            foreach (GroceryItem item in data.groceryItems)
+            {
+                enrichedList.Add(enrich(item));
+            }
+
+            data.groceryItems = enrichedList;
 
             /*
              * If the grocery item doesn't exist, create it.
              * If it exists, then update it.
              */
-            return null;
+
+            Document doc = await this.client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(databaseName, groceryListCollection), data);
+            Console.WriteLine("Created Document: ", doc);
+
+            return Request.CreateResponse(HttpStatusCode.OK, doc);
         }
-        
+
+        private GroceryItem enrich(GroceryItem item)
+        {
+            // Currently, its a pass through, bu tin the future we can check the expiry date
+            // and enrich the data (or fill in the blanks)
+            return item;
+        }
+
         [HttpDelete]
-        public HttpResponseMessage deleteGroceryItemFromList(GroceryItemRequest data)
+        public async System.Threading.Tasks.Task<HttpResponseMessage> deleteGroceryItemFromList(GroceryItemRequest data)
         {
             // Check if the user id is made available.
+            if (data == null || data.Guid == null || data.Guid == "")
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Missing GUID");
+            }
 
             // Check if the grocery item id is made available.
+            if (data.groceryItems.Count() == 0)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Nothing to delete from the grocery item list");
+            }
 
             /*
              * If the grocery item exists for the user, delete it.
              * else return an error code.
-             */ 
+             */
+            FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
 
-            return null;
+            IQueryable<GroceryItemRequest> groceryItemListQuery = this.client.CreateDocumentQuery<GroceryItemRequest>(
+                    UriFactory.CreateDocumentCollectionUri(databaseName, groceryListCollection), queryOptions)
+                    .Where(x => x.Guid == data.Guid);
+
+            GroceryItemRequest groceryItemListOnDocument = groceryItemListQuery.First();
+
+            foreach (GroceryItem itemOnRequest in data.groceryItems)
+            {
+                foreach (GroceryItem itemOnDocument in groceryItemListOnDocument.groceryItems)
+                {
+                    if (itemOnRequest.Name == itemOnDocument.Name)
+                    {
+                        itemOnDocument.Quantity = (itemOnDocument.Quantity - itemOnRequest.Quantity) < 0 ? 0 : (itemOnDocument.Quantity - itemOnRequest.Quantity);
+                        break;
+                    }
+                }
+            }
+
+
+            try
+            {
+                await this.client.ReplaceDocumentAsync(UriFactory.CreateDocumentUri(databaseName, groceryListCollection, data.Guid), groceryItemListOnDocument);
+            }
+            catch (DocumentClientException de)
+            {
+                throw;
+            }
+
+            return Request.CreateResponse(HttpStatusCode.OK, groceryItemListOnDocument);
         }
 
         [HttpPut]
