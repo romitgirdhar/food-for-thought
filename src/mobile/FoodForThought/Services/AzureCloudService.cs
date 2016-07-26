@@ -39,10 +39,10 @@ namespace FoodForThought.Services
 			return response;
 		}
 
-		public async Task<ICollection<GroceryItem>> GetGroceryItems(int userId)
+		public async Task<ICollection<GroceryItem>> GetGroceryItems(string userId)
 		{
 			var values = new Dictionary<string, string>();
-			values.Add("id", userId.ToString());
+			values.Add("id", userId);
 			//var response = await client.InvokeApiAsync<ICollection<GroceryItem>>("Grocery", HttpMethod.Get, values);
 			//return response;
 
@@ -50,11 +50,11 @@ namespace FoodForThought.Services
 			return response.groceryItems;
 		}
 
-		public async Task<JToken> AddGroceryItem(int userId, GroceryItem item)
+		public async Task<JToken> AddGroceryItem(string userId, GroceryItem item)
 		{
 			AddGroceryItemRequest request = new AddGroceryItemRequest()
 			{
-				id = userId.ToString(),
+				id = userId,
 				groceryItems = new List<GroceryItem>() { item }
 			};
 			var response = await client.InvokeApiAsync<AddGroceryItemRequest, JToken>("Grocery", request, HttpMethod.Post, null);

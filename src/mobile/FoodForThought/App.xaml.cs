@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using FoodForThought.Abstractions;
 using FoodForThought.Models;
 using FoodForThought.Services;
@@ -43,6 +44,8 @@ namespace FoodForThought
 				Application.Current.Properties["DeviceId"] = DeviceId.ToString();
 				Application.Current.SavePropertiesAsync();
 			}
+
+			Debug.WriteLine("DeviceId: " + DeviceId.ToString());
 		}
 
 		protected override void OnStart()
