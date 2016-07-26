@@ -33,6 +33,7 @@ namespace FoodForThought.Droid
 			global::ZXing.Net.Mobile.Forms.Android.Resource.Layout.zxingscannerfragmentlayout = global::FoodForThought.Droid.Resource.Layout.zxingscannerfragmentlayout;
 			global::ZXing.Net.Mobile.Forms.Android.Resource.String.library_name = global::FoodForThought.Droid.Resource.String.library_name;
 			global::Xamarin.Forms.Platform.Android.Resource.Attribute.actionBarSize = global::FoodForThought.Droid.Resource.Attribute.actionBarSize;
+			global::Gcm.Client.Resource.String.library_name = global::FoodForThought.Droid.Resource.String.library_name;
 		}
 		
 		public partial class Animation
@@ -2955,12 +2956,6 @@ namespace FoodForThought.Droid
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f060027
-			public const int ApplicationName = 2131099687;
-			
-			// aapt resource value: 0x7f060026
-			public const int Hello = 2131099686;
-			
 			// aapt resource value: 0x7f060012
 			public const int abc_action_bar_home_description = 2131099666;
 			
@@ -3027,8 +3022,8 @@ namespace FoodForThought.Droid
 			// aapt resource value: 0x7f060011
 			public const int character_counter_pattern = 2131099665;
 			
-			// aapt resource value: 0x7f060028
-			public const int library_name = 2131099688;
+			// aapt resource value: 0x7f060026
+			public const int library_name = 2131099686;
 			
 			// aapt resource value: 0x7f060000
 			public const int mr_button_content_description = 2131099648;

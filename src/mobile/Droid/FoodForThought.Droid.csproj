@@ -111,6 +111,9 @@
     <Reference Include="Xamarin.Forms.Platform">
       <HintPath>..\packages\Xamarin.Forms.2.3.0.107\lib\MonoAndroid10\Xamarin.Forms.Platform.dll</HintPath>
     </Reference>
+    <Reference Include="GCM.Client">
+      <HintPath>..\Components\GCMClient-1.0\lib\android\GCM.Client.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FoodForThought\FoodForThought.csproj">
@@ -122,6 +125,7 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="GcmService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -139,6 +143,12 @@
     <AndroidResource Include="Resources\drawable-xxhdpi\icon.png" />
     <AndroidResource Include="Resources\drawable-hdpi\camera.png" />
     <AndroidResource Include="Resources\drawable-xhdpi\camera.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <XamarinComponentReference Include="GCMClient">
+      <Version>1.0</Version>
+      <Visible>False</Visible>
+    </XamarinComponentReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <Import Project="..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
