@@ -112,7 +112,7 @@ namespace fft_mobileapp.Controllers
                     UriFactory.CreateDocumentCollectionUri(databaseName, groceryListCollection), queryOptions)
                     .Where(x => x.Id == data.Id);
 
-            GroceryItemRequest groceryItemListOnDocument = groceryItemListQuery.First();
+            GroceryItemRequest groceryItemListOnDocument = groceryItemListQuery.ToList().First();
 
             foreach (GroceryItem itemOnRequest in data.groceryItems)
             {
@@ -153,7 +153,7 @@ namespace fft_mobileapp.Controllers
             // Check if the grocery item id is made available.
             if (data.groceryItems.Count() == 0)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Nothing to delete from the grocery item list");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Nothing to transition from the grocery item list");
             }
 
             /*
@@ -172,7 +172,7 @@ namespace fft_mobileapp.Controllers
              * 
              * else, return an error code.
              */
-            GroceryItemRequest groceryItemListOnDocument = groceryItemListQuery.First();
+            GroceryItemRequest groceryItemListOnDocument = groceryItemListQuery.ToList().First();
 
             foreach (GroceryItem itemOnRequest in data.groceryItems)
             {
