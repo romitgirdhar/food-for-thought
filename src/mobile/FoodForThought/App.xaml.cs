@@ -1,5 +1,6 @@
 ﻿using System;
 using FoodForThought.Abstractions;
+using FoodForThought.Models;
 using FoodForThought.Services;
 using Xamarin.Forms;
 
@@ -14,6 +15,9 @@ namespace FoodForThought
 		//Testing constants
 		public static bool kADD_TESTING_UPC = true;
 		public static string k_TESTING_UPC = "708163109362";
+		public static string kGCM_PROJECT_NUMBER = "476736012638";
+
+		public static UserProfile user;
 
 		public App()
 		{

@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using FoodForThought.Abstractions;
+using FoodForThought.Models;
 using Xamarin.Forms;
 
 
@@ -37,6 +38,16 @@ namespace FoodForThought.ViewModels
 				Application.Current.Properties["ZipCode"] = ZipCode;
 				Application.Current.SavePropertiesAsync();
 
+				//Temporary create fake user
+				App.user = new UserProfile()
+				{
+					FirstName = "Romit",
+					LastName = "Girdhar",
+					Email = "romit.girdhar@microsoft.com",
+					ZipCode = "98033",
+					UserId = App.DeviceId.ToString(),
+					Password = "**********"
+				};
 
 				//Application.Current.MainPage = new NavigationPage(new Pages.MainPageCS());
 				Application.Current.MainPage = new Pages.MasterPage();

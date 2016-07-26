@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FoodForThought.Pages.AboutPage"
+             Title="{Binding Title}">
+  <ContentPage.Content>
+    <StackLayout HorizontalOptions="Center"
+                 Orientation="Vertical"
+                 VerticalOptions="Center">
+ 	  <Label Text="Food for Thought"/>			
+	  <Label Text="Brought to you by:" />
+      <Label Text="Jeff Chen" />
+	  <Label Text="Ashish Chhabria" />
+	  <Label Text="Eric Ewe" />
+	  <Label Text="Romit Girdhar" />
+	  <Label Text="Shweta Gupta" />
+	  <Label Text="Chris Risner" />
+    </StackLayout>
+		
+  </ContentPage.Content>
+</ContentPage>

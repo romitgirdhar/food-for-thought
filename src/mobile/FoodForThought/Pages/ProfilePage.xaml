@@ -4,18 +4,34 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              Title="{Binding Title}">
     <ContentPage.Content>
-        <StackLayout>
-            <Label HorizontalOptions="FillAndExpand"
-                                       Text="{Binding Title}"
-                                       TextColor="#272832">
-                <Label.TextColor>
-                    <OnPlatform x:TypeArguments="Color"
-                                Android="#F3F3F3"
-                                WinPhone="#272832"
-                                iOS="#272832" />
-                </Label.TextColor>
-            </Label>
-        </StackLayout>
+        <Grid>
+		  <Grid.RowDefinitions>
+		    <RowDefinition Height="40" />
+		    <RowDefinition Height="40" />
+		    <RowDefinition Height="40" />
+			<RowDefinition Height="40" />
+			<RowDefinition Height="40" />
+			<RowDefinition Height="40" />
+		  </Grid.RowDefinitions>
+		  <Grid.ColumnDefinitions>
+		    <ColumnDefinition Width="100" />
+		    <ColumnDefinition Width="*" />			
+		  </Grid.ColumnDefinitions>
+			
+  			<Label Text="UserId:" Grid.Row="0" Grid.Column="0" />
+			<Label Text="{Binding Item.UserId}" Grid.Row="0" Grid.Column="1" />
+			<Label Text="Password:" Grid.Row="1" Grid.Column="0" />
+			<Entry Text="{Binding Item.Password}" Grid.Row="1" Grid.Column="1" />
+			<Label Text="First Name:" Grid.Row="2" Grid.Column="0" />
+			<Entry Text="{Binding Item.FirstName}" Grid.Row="2" Grid.Column="1" />
+			<Label Text="Last Name:" Grid.Row="3" Grid.Column="0" />
+			<Entry Text="{Binding Item.LastName}" Grid.Row="3" Grid.Column="1" />
+			<Label Text="Email:" Grid.Row="4" Grid.Column="0" />
+			<Entry Text="{Binding Item.Email}" Grid.Row="4" Grid.Column="1" />
+			<Label Text="Zipcode:" Grid.Row="5" Grid.Column="0" />
+			<Entry Text="{Binding Item.ZipCode}" Grid.Row="5" Grid.Column="1" />
+
+		</Grid>
 		
     </ContentPage.Content>
 </ContentPage>
