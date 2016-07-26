@@ -11,7 +11,7 @@
 	                                       TextColor="#272832">
 	                <Label.TextColor>
 	                    <OnPlatform x:TypeArguments="Color"
-	                                Android="#F3F3F3"
+	                                Android="#272832"
 	                                WinPhone="#272832"
 	                                iOS="#272832" />
 	                </Label.TextColor>
@@ -23,7 +23,7 @@
 	                                       TextColor="#272832">
 		                <Label.TextColor>
 		                    <OnPlatform x:TypeArguments="Color"
-		                                Android="#F3F3F3"
+		                                Android="#272832"
 		                                WinPhone="#272832"
 		                                iOS="#272832" />
 	                	</Label.TextColor>
@@ -33,7 +33,7 @@
 	                                       TextColor="#272832">
 		                <Label.TextColor>
 		                    <OnPlatform x:TypeArguments="Color"
-		                                Android="#F3F3F3"
+		                                Android="#272832"
 		                                WinPhone="#272832"
 		                                iOS="#272832" />
 	                </Label.TextColor>
@@ -46,7 +46,7 @@
 	                                       TextColor="#272832">
 		                <Label.TextColor>
 		                    <OnPlatform x:TypeArguments="Color"
-		                                Android="#F3F3F3"
+		                                Android="#272832"
 		                                WinPhone="#272832"
 		                                iOS="#272832" />
 	                	</Label.TextColor>
@@ -64,7 +64,7 @@
 	                                       TextColor="#272832">
 		                <Label.TextColor>
 		                    <OnPlatform x:TypeArguments="Color"
-		                                Android="#F3F3F3"
+		                                Android="#272832"
 		                                WinPhone="#272832"
 		                                iOS="#272832" />
 	                	</Label.TextColor>

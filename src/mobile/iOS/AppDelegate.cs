@@ -13,6 +13,7 @@ namespace FoodForThought.iOS
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
 			Microsoft.WindowsAzure.MobileServices.CurrentPlatform.Init();
+			ZXing.Net.Mobile.Forms.Android.Platform.Init();
 			global::Xamarin.Forms.Forms.Init();
 
 			// Code for starting up the Xamarin Test Cloud Agent

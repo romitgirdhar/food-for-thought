@@ -21,6 +21,7 @@ namespace FoodForThought.Droid
 			base.OnCreate(bundle);
 
 			Microsoft.WindowsAzure.MobileServices.CurrentPlatform.Init();
+			ZXing.Net.Mobile.Forms.Android.Platform.Init();
 
 			global::Xamarin.Forms.Forms.Init(this, bundle);
 
