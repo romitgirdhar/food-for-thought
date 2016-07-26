@@ -12,7 +12,7 @@ namespace FoodForThought.Abstractions
 
 		Task<UpcLookupResponse> GetInformationForUPC(string upc);
 
-		Task<ICollection<GroceryItem>> GetGroceryItems(); 
+		Task<ICollection<GroceryItem>> GetGroceryItems(int userId); 
 		//Task<GroceryItem> GetGroceryItemById(string groceryItemId);
 		//void DeleteGroceryItem(GroceryItem item);
 		//Task<GroceryItem> AddGroceryItem(GroceryItem item);

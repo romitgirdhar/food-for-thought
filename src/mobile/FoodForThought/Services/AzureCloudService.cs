@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using FoodForThought.Abstractions;
 using FoodForThought.Models;
 using Microsoft.WindowsAzure.MobileServices;
+using Newtonsoft.Json.Linq;
 
 namespace FoodForThought.Services
 {
@@ -38,10 +39,15 @@ namespace FoodForThought.Services
 			return response;
 		}
 
-		public async Task<ICollection<GroceryItem>> GetGroceryItems()
+		public async Task<ICollection<GroceryItem>> GetGroceryItems(int userId)
 		{
-			var response = await client.InvokeApiAsync<ICollection<GroceryItem>>("Grocery");
-			return response;
+			var values = new Dictionary<string, string>();
+			values.Add("id", userId.ToString());
+			//var response = await client.InvokeApiAsync<ICollection<GroceryItem>>("Grocery", HttpMethod.Get, values);
+			//return response;
+
+			var response = await client.InvokeApiAsync<GetGroceryItemsResponse>("Grocery", HttpMethod.Get, values);
+			return response.groceryItems;
 		}
 
 		//public async Task<GroceryItem> GetGroceryItemById(string groceryItemId)

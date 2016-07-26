@@ -71,13 +71,13 @@ namespace FoodForThought.ViewModels
 				list.Add(new GroceryItem() { Name = "GL-Coffee" });
 				list.Add(new GroceryItem() { Name = "GL-Apples" });
 
-
+				var dataList = await App.CloudService.GetGroceryItems(App.user.UserId);
 
 				//Uncomment when we start reading data from the server
 				//var table = App.CloudService.GetTable<GroceryItem>();
 				//var list = await table.ReadAllItemsAsync();
 				Items.Clear();
-				foreach (var item in list)
+				foreach (var item in dataList)
 					Items.Add(item);
 			}
 			catch (Exception ex)
