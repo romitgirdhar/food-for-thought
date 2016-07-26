@@ -11,6 +11,7 @@
 		    <RowDefinition Height="40" />
 			<RowDefinition Height="40" />
 			<RowDefinition Height="40" />
+			<RowDefinition Height="40" />
 		  </Grid.RowDefinitions>
 		  <Grid.ColumnDefinitions>
 		    <ColumnDefinition Width="100" />
@@ -19,9 +20,9 @@
 		  </Grid.ColumnDefinitions>
 			
   			<Label Text="Name:" Grid.Row="1" Grid.Column="0" />
-			<Entry Text="{Binding Item.Name}" Grid.Row="1" Grid.Column="1" />
+			<Entry Text="{Binding Item.Name}" Grid.Row="1" Grid.Column="1" Placeholder="enter item name"/>
 			<Label Text="Quantity:" Grid.Row="2" Grid.Column="0" />
-			<Entry Text="{Binding Item.Quantity}" Grid.Row="2" Grid.Column="1" />
+			<Entry Text="{Binding Item.Quantity}" Grid.Row="2" Grid.Column="1" Placeholder="enter number" Keyboard="Numeric"/>
 			<Label Text="UPC:" Grid.Row="3" Grid.Column="0" />
 			<Entry Text="{Binding Item.Upc}" Grid.Row="3" Grid.Column="1" />
 			<Button Image="camera.png" 
@@ -40,6 +41,10 @@
 					<x:String>Wasted</x:String>
 		        </Picker.Items>
 		    </Picker> 
+
+			<Button Text="Save Item" 
+					Command="{Binding SaveItemCommand}"
+					Grid.Row="5" Grid.Column="1"/>
 		</Grid>
 
 		
