@@ -8,7 +8,6 @@ using System.Web.Http;
 using fft_mobileapp.DataObjects;
 
 // ADD THIS PART TO YOUR CODE
-using System.Net;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Newtonsoft.Json;
@@ -26,31 +25,34 @@ namespace fft_mobileapp.Controllers
         private string groceryListCollection = "GroceryList";
 
         [HttpGet]
-        public HttpResponseMessage Get(String guid)
+        public HttpResponseMessage Get(String Id)
         {
-            // Check to see if the GUID is provided.
-            if (guid == null)
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Missing GUID");
+            // Check to see if the Id is provided.
+            if (Id == null)
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Missing Id");
             
-            FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
+            FeedOptions queryOptions = new FeedOptions { MaxItemCount = 1 };
 
             IQueryable<GroceryItemRequest> groceryItemListQuery = this.client.CreateDocumentQuery<GroceryItemRequest>(
                     UriFactory.CreateDocumentCollectionUri(databaseName, groceryListCollection), queryOptions)
-                    .Where(x => x.Guid == guid);
+                    .Where(x => x.Id == Id);
 
-            
+            // If the user id doesn't exist, then return an error
+            if (groceryItemListQuery.ToList().Count() == 0)
+                return Request.CreateResponse(HttpStatusCode.NotFound, "Unknown user id");
+
             // else return the data.
 
-            return Request.CreateResponse(HttpStatusCode.OK, groceryItemListQuery.First());
+            return Request.CreateResponse(HttpStatusCode.OK, groceryItemListQuery.ToList().First());
         }
 
         [HttpPost]
         public async System.Threading.Tasks.Task<HttpResponseMessage> insertGroceryItemToList(GroceryItemRequest data)
         {
             // Check if the user id is available 
-            if (data == null || data.Guid == null || data.Guid == "")
+            if (data == null || data.Id == null || data.Id == "")
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Missing GUID");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Missing Id");
             }
 
             if (data.groceryItems.Count() == 0)
@@ -90,9 +92,9 @@ namespace fft_mobileapp.Controllers
         public async System.Threading.Tasks.Task<HttpResponseMessage> deleteGroceryItemFromList(GroceryItemRequest data)
         {
             // Check if the user id is made available.
-            if (data == null || data.Guid == null || data.Guid == "")
+            if (data == null || data.Id == null || data.Id == "")
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Missing GUID");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Missing Id");
             }
 
             // Check if the grocery item id is made available.
@@ -109,7 +111,7 @@ namespace fft_mobileapp.Controllers
 
             IQueryable<GroceryItemRequest> groceryItemListQuery = this.client.CreateDocumentQuery<GroceryItemRequest>(
                     UriFactory.CreateDocumentCollectionUri(databaseName, groceryListCollection), queryOptions)
-                    .Where(x => x.Guid == data.Guid);
+                    .Where(x => x.Id == data.Id);
 
             GroceryItemRequest groceryItemListOnDocument = groceryItemListQuery.First();
 
@@ -128,7 +130,7 @@ namespace fft_mobileapp.Controllers
 
             try
             {
-                await this.client.ReplaceDocumentAsync(UriFactory.CreateDocumentUri(databaseName, groceryListCollection, data.Guid), groceryItemListOnDocument);
+                await this.client.ReplaceDocumentAsync(UriFactory.CreateDocumentUri(databaseName, groceryListCollection, data.Id), groceryItemListOnDocument);
 
                 // TODO record state transition
             }
@@ -144,9 +146,9 @@ namespace fft_mobileapp.Controllers
         public async System.Threading.Tasks.Task<HttpResponseMessage> transitionGroceryItem(GroceryItemRequest data)
         {
             // Check if the user id is made available.
-            if (data == null || data.Guid == null || data.Guid == "")
+            if (data == null || data.Id == null || data.Id == "")
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, "Missing GUID");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Missing Id");
             }
 
             // Check if the grocery item id is made available.
@@ -163,7 +165,7 @@ namespace fft_mobileapp.Controllers
 
             IQueryable<GroceryItemRequest> groceryItemListQuery = this.client.CreateDocumentQuery<GroceryItemRequest>(
                     UriFactory.CreateDocumentCollectionUri(databaseName, groceryListCollection), queryOptions)
-                    .Where(x => x.Guid == data.Guid);
+                    .Where(x => x.Id == data.Id);
 
             /*
              * If the grocery item exists for the given user id, then change the state
@@ -188,7 +190,7 @@ namespace fft_mobileapp.Controllers
 
             try
             {
-                await this.client.ReplaceDocumentAsync(UriFactory.CreateDocumentUri(databaseName, groceryListCollection, data.Guid), groceryItemListOnDocument);
+                await this.client.ReplaceDocumentAsync(UriFactory.CreateDocumentUri(databaseName, groceryListCollection, data.Id), groceryItemListOnDocument);
             }
             catch (DocumentClientException de)
             {
