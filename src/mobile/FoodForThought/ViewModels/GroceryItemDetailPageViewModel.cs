@@ -30,7 +30,11 @@ namespace FoodForThought.ViewModels
 			else
 			{
 				Item = new GroceryItem { Name = "New Grocery Item" };
-				Title = "New Grocery Item";
+				if (App.kADD_TESTING_UPC)
+				{
+					Item.Upc = App.k_TESTING_UPC;
+				}
+				Title = "Add Grocery Item";
 			}
 		}
 
@@ -45,6 +49,15 @@ namespace FoodForThought.ViewModels
 
 			try
 			{
+				if (Item.Upc != "")
+				{
+					//Application.Current.MainPage.DisplayAlert("ALERT", Item.Upc, "OK");
+					var result = await App.CloudService.GetInformationForUPC(Item.Upc);
+					Item.Name = result.Description + " " + result.Size;
+					OnPropertyChanged("Item");
+					return;
+				}
+
 				//await Application.Current.MainPage.Navigation.PushAsync(new Pages.GroceryItemDetailPage());
 
 				//var master = (MasterPage)Application.Current.MainPage;
@@ -70,7 +83,7 @@ namespace FoodForThought.ViewModels
 						//http://foodforthought.azurewebsites.net/api/upc/708163109362?ZUMO-API-VERSION=2.0.0
 
 						//var table = App.CloudService.GetTable<GroceryItem>();
-						App.CloudService.test(result.Text);
+						App.CloudService.GetInformationForUPC(result.Text);
 					});
 				};
 

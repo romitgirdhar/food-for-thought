@@ -11,6 +11,10 @@ namespace FoodForThought
 		public static ICloudService CloudService { get; set; }
 		public static Guid DeviceId { get; private set; }
 
+		//Testing constants
+		public static bool kADD_TESTING_UPC = true;
+		public static string k_TESTING_UPC = "708163109362";
+
 		public App()
 		{
 			InitializeComponent();
