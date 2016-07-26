@@ -66,9 +66,11 @@ namespace FoodForThought.ViewModels
 						Debug.WriteLine("Bar code scanned: " + result.Text);
 						Item.Upc = result.Text;
 						OnPropertyChanged("Item");
-						//Navigation.PopAsync();
+						//Start background task to pull information for UPC code
+						//http://foodforthought.azurewebsites.net/api/upc/708163109362?ZUMO-API-VERSION=2.0.0
 
-						//DisplayAlert("Scanned Barcode", result.Text, "OK");
+						//var table = App.CloudService.GetTable<GroceryItem>();
+						App.CloudService.test(result.Text);
 					});
 				};
 
@@ -76,6 +78,8 @@ namespace FoodForThought.ViewModels
 				//await Navigation.PushAsync(scanPage);
 				var master = (MasterPage)Application.Current.MainPage;
 				await master.Detail.Navigation.PushAsync(scanPage);
+
+
 
 			}
 			catch (Exception ex)
