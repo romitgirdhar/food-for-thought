@@ -11,8 +11,35 @@ namespace FoodForThought.ViewModels
 {
 	public class GroceryItemDetailPageViewModel : BaseViewModel
 	{
+		public enum GroceryItemDetailMode
+		{
+			ViewItem,
+			AddItem
+		};
+
+		public enum GroceryPageMode
+		{
+			GroceryList,
+			PantryList
+		};
+
 		//public GroceryItem Item { get; set; }
 		private GroceryItem _item;
+		private GroceryItemDetailMode mDetailMode;
+		private GroceryPageMode mPageMode;
+		private string mWarnInfo;
+
+		public string WarnInfo
+		{
+			get
+			{
+				return mWarnInfo;
+			}
+			set
+			{
+				SetProperty(ref mWarnInfo, value, "WarnInfo");
+			}
+		}
 
 		public GroceryItem Item
 		{
@@ -20,16 +47,29 @@ namespace FoodForThought.ViewModels
 			set { SetProperty(ref _item, value, "Item"); }
 		}
 
-		public GroceryItemDetailPageViewModel(GroceryItem item = null)
+
+		public GroceryItemDetailPageViewModel(GroceryPageMode pageMode, GroceryItem item = null)
 		{
+			mPageMode = pageMode;
 			if (item != null)
 			{
+				mDetailMode = GroceryItemDetailMode.ViewItem;
 				Item = item;
 				Title = item.Name;
 			}
 			else
 			{
-				Item = new GroceryItem { Name = "New Grocery Item" };
+				mDetailMode = GroceryItemDetailMode.AddItem;
+				Item = new GroceryItem { 
+					Name = "",
+					Quantity = 1
+				};
+
+				if (mPageMode == GroceryPageMode.GroceryList)
+					Item.State = Enum.GetName(typeof(GroceryState), GroceryState.Listed);
+				else if (mPageMode == GroceryPageMode.PantryList)
+					Item.State = Enum.GetName(typeof(GroceryState), GroceryState.Bought);
+
 				if (App.kADD_TESTING_UPC)
 				{
 					Item.Upc = App.k_TESTING_UPC;
@@ -98,6 +138,46 @@ namespace FoodForThought.ViewModels
 			catch (Exception ex)
 			{
 				Debug.WriteLine($"[GroceryItemDetailPage] Error in AddNewItem: {ex.Message}");
+			}
+			finally
+			{
+				IsBusy = false;
+			}
+		}
+
+
+		//SaveItemCommand
+		Command saveItemCmd;
+		public Command SaveItemCommand => saveItemCmd ?? (saveItemCmd = new Command(async () => await ExecuteSaveItemCommand()));
+
+		async Task ExecuteSaveItemCommand()
+		{
+			if (IsBusy)
+				return;
+			IsBusy = true;
+
+			try
+			{
+				//Perform validation
+				if (Item.Name == "")
+				{
+					Device.BeginInvokeOnMainThread(() =>
+						{
+							WarnInfo = "Please enter an item name";
+						});
+					return;
+				}
+
+				//Save item
+				await App.CloudService.AddGroceryItem(App.user.UserId, Item);
+
+				MessagingCenter.Send<GroceryItemDetailPageViewModel>(this, "ItemsChanged");
+				var master = (MasterPage)Application.Current.MainPage;
+				await master.Detail.Navigation.PopAsync();
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine($"[GroceryItemDetailPage] Error in SaveItemCommand: {ex.Message}");
 			}
 			finally
 			{

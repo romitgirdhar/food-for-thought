@@ -59,7 +59,6 @@ namespace FoodForThought.Droid
 		{
 			{"body", templateBodyGCM}
 		};
-
 				await push.RegisterAsync(RegistrationID, templates);
 				Log.Info("Push Installation Id", push.InstallationId.ToString());
 			}

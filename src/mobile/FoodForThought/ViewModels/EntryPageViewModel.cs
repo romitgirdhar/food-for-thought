@@ -41,11 +41,13 @@ namespace FoodForThought.ViewModels
 				//Temporary create fake user
 				App.user = new UserProfile()
 				{
+					//UserId = 3,
+					UserId = App.DeviceId.ToString(),
 					FirstName = "Romit",
 					LastName = "Girdhar",
 					Email = "romit.girdhar@microsoft.com",
 					ZipCode = "98033",
-					UserId = App.DeviceId.ToString(),
+					//UserId = App.DeviceId.ToString(),
 					Password = "**********"
 				};
 

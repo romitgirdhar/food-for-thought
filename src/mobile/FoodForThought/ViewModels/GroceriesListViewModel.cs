@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using FoodForThought.Abstractions;
 using FoodForThought.Models;
@@ -45,7 +46,10 @@ namespace FoodForThought.ViewModels
 				{
 					//Application.Current.MainPage.Navigation.PushAsync(new Pages.GroceryItemDetailPage(selectedItem));
 					var master = (MasterPage)Application.Current.MainPage;
-					master.Detail.Navigation.PushAsync(new Pages.GroceryItemDetailPage(selectedItem));
+					master.Detail.Navigation.PushAsync(
+						new Pages.GroceryItemDetailPage(
+							GroceryItemDetailPageViewModel.GroceryPageMode.GroceryList,
+                            selectedItem));
 
 
 					SelectedItem = null;
@@ -65,19 +69,20 @@ namespace FoodForThought.ViewModels
 			try
 			{
 				
-				List<GroceryItem> list = new List<GroceryItem>();
-				list.Add(new GroceryItem() { Name = "GL-Hawaiian Chips" });
-				list.Add(new GroceryItem() { Name = "GL-Jerky" });
-				list.Add(new GroceryItem() { Name = "GL-Coffee" });
-				list.Add(new GroceryItem() { Name = "GL-Apples" });
+				//List<GroceryItem> list = new List<GroceryItem>();
+				//list.Add(new GroceryItem() { Name = "GL-Hawaiian Chips" });
+				//list.Add(new GroceryItem() { Name = "GL-Jerky" });
+				//list.Add(new GroceryItem() { Name = "GL-Coffee" });
+				//list.Add(new GroceryItem() { Name = "GL-Apples" });
 
-
+				var dataList = await App.CloudService.GetGroceryItems(App.user.UserId);
+				dataList = dataList.Where(p => p.State == "Listed").ToArray();
 
 				//Uncomment when we start reading data from the server
 				//var table = App.CloudService.GetTable<GroceryItem>();
 				//var list = await table.ReadAllItemsAsync();
 				Items.Clear();
-				foreach (var item in list)
+				foreach (var item in dataList)
 					Items.Add(item);
 			}
 			catch (Exception ex)
@@ -104,7 +109,8 @@ namespace FoodForThought.ViewModels
 				//await Application.Current.MainPage.Navigation.PushAsync(new Pages.GroceryItemDetailPage());
 
 				var master = (MasterPage)Application.Current.MainPage;
-				await master.Detail.Navigation.PushAsync(new Pages.GroceryItemDetailPage());
+				await master.Detail.Navigation.PushAsync(
+					new Pages.GroceryItemDetailPage(GroceryItemDetailPageViewModel.GroceryPageMode.GroceryList));
 			}
 			catch (Exception ex)
 			{
