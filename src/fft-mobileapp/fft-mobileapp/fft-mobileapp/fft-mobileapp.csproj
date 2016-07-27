@@ -199,6 +199,7 @@
     <Compile Include="Controllers\RecipeController.cs" />
     <Compile Include="Controllers\TodoItemController.cs" />
     <Compile Include="Controllers\UPCController.cs" />
+    <Compile Include="Controllers\UpdateTagsController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DataObjects\GroceryItem.cs" />
     <Compile Include="DataObjects\GroceryItemRequest.cs" />
@@ -226,6 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\fft-mobileapp.pubxml" />
+    <None Include="Properties\PublishProfiles\foodforthought - Web Deploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
