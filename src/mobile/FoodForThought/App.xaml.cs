@@ -29,6 +29,32 @@ namespace FoodForThought
 			// Initialize the Cloud Service
 			CloudService = new AzureCloudService();
 
+			string ZipCode;
+			if (Application.Current.Properties.ContainsKey("ZipCode"))
+			{
+				ZipCode = Application.Current.Properties["ZipCode"].ToString();
+			}
+			else {
+				ZipCode = "98033";
+			}
+
+			Application.Current.Properties["ZipCode"] = ZipCode;
+			Application.Current.SavePropertiesAsync();
+
+			//Temporary create fake user
+			App.user = new UserProfile()
+			{
+				//UserId = 3,
+				UserId = App.DeviceId.ToString(),
+				FirstName = "Romit",
+				LastName = "Girdhar",
+				Email = "romit.girdhar@microsoft.com",
+				ZipCode = ZipCode,
+				//UserId = App.DeviceId.ToString(),
+				Password = "**********"
+			};
+
+
 			//MainPage = new FoodForThoughtPage();
 			MainPage = new NavigationPage(new Pages.EntryPage());
 		}

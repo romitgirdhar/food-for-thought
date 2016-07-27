@@ -20,6 +20,8 @@ namespace FoodForThought.Abstractions
 		//Task<GroceryItem> UpdateGroceryItem(GroceryItem item);
 
 		MobileServiceClient GetClient();
+
+		void UpdateTags(JArray tags);
 	}
 }
 

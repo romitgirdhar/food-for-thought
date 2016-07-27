@@ -50,6 +50,14 @@ namespace FoodForThought.iOS
 			// Register for push with your mobile app
 			var push = FoodForThought.App.CloudService.GetClient().GetPush();
 			push.RegisterAsync(deviceToken, templates);
+
+			// Define two new tags as a JSON array.
+			var body = new JArray();
+			body.Add("broadcast");
+			body.Add(FoodForThought.App.user.UserId);
+
+
+			FoodForThought.App.CloudService.UpdateTags(body);
 		}
 
 		public override void DidReceiveRemoteNotification(UIApplication application,NSDictionary userInfo, Action<UIBackgroundFetchResult> completionHandler)
