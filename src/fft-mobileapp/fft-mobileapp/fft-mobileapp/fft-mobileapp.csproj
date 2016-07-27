@@ -203,6 +203,7 @@
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DataObjects\GroceryItem.cs" />
     <Compile Include="DataObjects\GroceryItemRequest.cs" />
+    <Compile Include="DataObjects\StateTransitionItem.cs" />
     <Compile Include="DataObjects\TodoItem.cs" />
     <Compile Include="DocumentDBDomainManager.cs" />
     <Compile Include="DataObjects\FoodExpiryLookupItem.cs" />
