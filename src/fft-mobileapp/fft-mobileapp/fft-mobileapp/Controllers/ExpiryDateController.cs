@@ -9,6 +9,10 @@ using Microsoft.ProjectOxford.Vision;
 using Microsoft.ProjectOxford.Vision.Contract;
 using System.Globalization;
 using System.IO;
+using System.Threading.Tasks;
+using System.Drawing;
+using System.Web.Hosting;
+using System.Web.Configuration;
 
 namespace fft_mobileapp.Controllers
 {
@@ -18,18 +22,45 @@ namespace fft_mobileapp.Controllers
         static string[] bestby_phrases = { "best by", "expiry", "best if used by", "exp", "expiration", "sell by", "use by", "consume by", "bbn" };
         static string[] date_abb = { "jan", "january", "feb", "february", "march", "mar", "april", "apr", "april", "may", "june", "jun", "july", "jul", "sept", "sep", "september", "oct", "october", "nov", "november", "dec", "december" };
 
-        public DateTime Get(Stream imageFileStream)
+        public async Task<DateTimeOffset> Post()
         {
-            System.Configuration.Configuration rootWebConfig1 =
-                System.Web.Configuration.WebConfigurationManager.OpenWebConfiguration(null);
-            VisionServiceClient VisionServiceClient = new VisionServiceClient(rootWebConfig1.AppSettings.Settings["ProjectOxfordVisionSubscriptionKey"].Value);
-            OcrResults analysisResult = VisionServiceClient.RecognizeTextAsync(imageFileStream, "en").Result;
-            var expiryDate = GetExpiryDate(analysisResult);
+            var result = new HttpResponseMessage(HttpStatusCode.OK);
+            Stream stream = null;
+            if (Request.Content.IsMimeMultipartContent())
+            {
+                await Request.Content.ReadAsMultipartAsync<MultipartMemoryStreamProvider>(new MultipartMemoryStreamProvider()).ContinueWith((task) =>
+                {
+                    MultipartMemoryStreamProvider provider = task.Result;
+                    foreach (HttpContent content in provider.Contents)
+                    {
+                        stream = content.ReadAsStreamAsync().Result;
+                    }
+                });
+            }
+            else
+            {
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.NotAcceptable, "This request is not properly formatted"));
+            }
 
+            VisionServiceClient VisionServiceClient = new VisionServiceClient(WebConfigurationManager.AppSettings["ProjectOxfordVisionSubscriptionKey"]);
+            var expiryDate = DateTimeOffset.Now;
+            try
+            {
+                OcrResults analysisResult = await VisionServiceClient.RecognizeTextAsync(stream, "en");
+                expiryDate = GetExpiryDate(analysisResult);
+            }
+            catch(Exception e)
+            {
+                expiryDate = DateTimeOffset.MinValue.Date;
+            }
+            if(expiryDate.Date.Equals(DateTimeOffset.MinValue.Date))
+            {
+                expiryDate = DateTimeOffset.Now.AddDays(14).Date;
+            }
             return expiryDate;
         }
 
-        private static DateTime GetExpiryDate(OcrResults rawresults)
+        private static DateTimeOffset GetExpiryDate(OcrResults rawresults)
         {
             DateTime dt = DateTime.Now.Date.AddDays(-20);
             foreach (var res in rawresults.Regions)
