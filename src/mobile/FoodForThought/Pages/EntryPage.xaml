@@ -11,7 +11,7 @@
       <Button BackgroundColor="Blue"
               BorderRadius="10"
               Command="{Binding LoginCommand}"
-              Text="Enter Food for Thought"
+              Text="Enter Food for ThoughtTest"
               TextColor="White"/>
     </StackLayout>
 		

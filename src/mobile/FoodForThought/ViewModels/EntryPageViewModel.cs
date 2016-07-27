@@ -10,18 +10,21 @@ namespace FoodForThought.ViewModels
 {
 	public class EntryPageViewModel : BaseViewModel
 	{
-		public string ZipCode { get; set; }
+		public string ZipCode
+		{
+			get
+			{
+				return App.user.ZipCode;
+			}
+			set
+			{
+				App.user.ZipCode = value;
+			}
+		}
 
 		public EntryPageViewModel()
 		{
 			 Title = "Food for Thought";
-			if (Application.Current.Properties.ContainsKey("ZipCode"))
-			{
-				ZipCode = Application.Current.Properties["ZipCode"].ToString();
-			}
-			else {
-				ZipCode = "98033";
-			}
 		}
 
 		Command loginCmd;
@@ -35,19 +38,21 @@ namespace FoodForThought.ViewModels
 
 			try
 			{				
-				Application.Current.Properties["ZipCode"] = ZipCode;
-				Application.Current.SavePropertiesAsync();
+				//Application.Current.Properties["ZipCode"] = ZipCode;
+				//Application.Current.SavePropertiesAsync();
 
-				//Temporary create fake user
-				App.user = new UserProfile()
-				{
-					FirstName = "Romit",
-					LastName = "Girdhar",
-					Email = "romit.girdhar@microsoft.com",
-					ZipCode = "98033",
-					UserId = App.DeviceId.ToString(),
-					Password = "**********"
-				};
+				////Temporary create fake user
+				//App.user = new UserProfile()
+				//{
+				//	//UserId = 3,
+				//	UserId = App.DeviceId.ToString(),
+				//	FirstName = "Romit",
+				//	LastName = "Girdhar",
+				//	Email = "romit.girdhar@microsoft.com",
+				//	ZipCode = "98033",
+				//	//UserId = App.DeviceId.ToString(),
+				//	Password = "**********"
+				//};
 
 				//Application.Current.MainPage = new NavigationPage(new Pages.MainPageCS());
 				Application.Current.MainPage = new Pages.MasterPage();

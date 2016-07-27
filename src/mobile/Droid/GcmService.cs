@@ -59,9 +59,20 @@ namespace FoodForThought.Droid
 		{
 			{"body", templateBodyGCM}
 		};
-
 				await push.RegisterAsync(RegistrationID, templates);
 				Log.Info("Push Installation Id", push.InstallationId.ToString());
+
+
+				// Define two new tags as a JSON array.
+				var body = new JArray();
+				body.Add("broadcast");
+				body.Add(FoodForThought.App.user.UserId);
+
+
+				FoodForThought.App.CloudService.UpdateTags(body);
+					//.InvokeApiAsync("updatetags/"
+					//+ App.MobileService.InstallationId, body);
+
 			}
 			catch (Exception ex)
 			{

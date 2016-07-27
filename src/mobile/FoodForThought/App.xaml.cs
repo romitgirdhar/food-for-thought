@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using FoodForThought.Abstractions;
 using FoodForThought.Models;
 using FoodForThought.Services;
@@ -28,6 +29,32 @@ namespace FoodForThought
 			// Initialize the Cloud Service
 			CloudService = new AzureCloudService();
 
+			string ZipCode;
+			if (Application.Current.Properties.ContainsKey("ZipCode"))
+			{
+				ZipCode = Application.Current.Properties["ZipCode"].ToString();
+			}
+			else {
+				ZipCode = "98033";
+			}
+
+			Application.Current.Properties["ZipCode"] = ZipCode;
+			Application.Current.SavePropertiesAsync();
+
+			//Temporary create fake user
+			App.user = new UserProfile()
+			{
+				//UserId = 3,
+				UserId = App.DeviceId.ToString(),
+				FirstName = "Romit",
+				LastName = "Girdhar",
+				Email = "romit.girdhar@microsoft.com",
+				ZipCode = ZipCode,
+				//UserId = App.DeviceId.ToString(),
+				Password = "**********"
+			};
+
+
 			//MainPage = new FoodForThoughtPage();
 			MainPage = new NavigationPage(new Pages.EntryPage());
 		}
@@ -43,6 +70,8 @@ namespace FoodForThought
 				Application.Current.Properties["DeviceId"] = DeviceId.ToString();
 				Application.Current.SavePropertiesAsync();
 			}
+
+			Debug.WriteLine("DeviceId: " + DeviceId.ToString());
 		}
 
 		protected override void OnStart()
