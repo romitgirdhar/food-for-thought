@@ -20,6 +20,7 @@ namespace fft_mobileapp.DataObjects
             this.Quantity = dup.Quantity;
             this.ExpiryDate = dup.ExpiryDate;
             this.PictureUrl = dup.PictureUrl;
+            this.Upc = dup.Upc;
         }
 
 		public string Name { get; set; }
@@ -28,6 +29,7 @@ namespace fft_mobileapp.DataObjects
 		public int Quantity { get; set; }
 		public DateTimeOffset? ExpiryDate { get; set; }
 		public string PictureUrl { get; set; }
+        public string Upc { get; set; }
 	}
 
     public enum GroceryState
