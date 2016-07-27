@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using FoodForThought.Abstractions;
 using FoodForThought.Models;
 using Microsoft.WindowsAzure.MobileServices;
 using Newtonsoft.Json.Linq;
+
 
 namespace FoodForThought.Services
 {
@@ -40,9 +42,39 @@ namespace FoodForThought.Services
 			return response;
 		}
 
-		public async Task<ExpiryLookupResponse> GetInformationForExpiry(Stream fileStream)
+		public async Task<DateTimeOffset> GetInformationForExpiry(byte[] fileStream)
 		{
-			return null;
+
+
+
+			//var result = await client.InvokeApiAsync<MultipartFormDataContent, JToken>("expirydate", form);
+			//var result = client.InvokeApiAsync<byte[],JToken>("expirydate", fileStream);
+
+			//return null;
+
+
+
+
+
+			using (var client = new HttpClient())
+			{
+				client.BaseAddress = new Uri("http://foodforthought.azurewebsites.net");
+				client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("image/jpeg"));
+
+				MultipartFormDataContent form = new MultipartFormDataContent();
+				form.Add(new ByteArrayContent(fileStream), "imageData");
+
+				HttpResponseMessage response = await client.PostAsync("api/expirydate?ZUMO-API-VERSION=2.0.0", form);
+
+				response.EnsureSuccessStatusCode();
+				string responseBody = await response.Content.ReadAsStringAsync();
+				Debug.WriteLine(responseBody);
+				DateTimeOffset expiryDate = DateTimeOffset.Parse(responseBody.Replace("\"", ""));
+				return expiryDate;
+			}
+
+			//return null;
+
 		}
 
 		public async Task<ICollection<GroceryItem>> GetGroceryItems(string userId)

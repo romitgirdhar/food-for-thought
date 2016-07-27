@@ -22,6 +22,18 @@ namespace FoodForThought.Models
 			{
 				return (int)Enum.Parse(typeof(GroceryState), this.State);
 			}
+			set
+			{
+				this.State = (string) Enum.GetName(typeof(GroceryState), value);
+			}
+		}
+
+		public string ExpiryDateText
+		{
+			get
+			{
+				return ExpiryDate.ToString();
+			}
 		}
 	}
 }

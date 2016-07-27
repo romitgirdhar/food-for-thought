@@ -13,7 +13,7 @@ namespace FoodForThought.Abstractions
 		ICloudTable<T> GetTable<T>() where T : TableData;
 
 		Task<UpcLookupResponse> GetInformationForUPC(string upc);
-		Task<ExpiryLookupResponse> GetInformationForExpiry(Stream fileStream);
+		Task<DateTimeOffset> GetInformationForExpiry(byte[] fileStream);
 
 		Task<ICollection<GroceryItem>> GetGroceryItems(string userId); 
 		//Task<GroceryItem> GetGroceryItemById(string groceryItemId);

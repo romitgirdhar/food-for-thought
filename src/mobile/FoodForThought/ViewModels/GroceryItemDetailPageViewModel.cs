@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 using FoodForThought.Abstractions;
 using FoodForThought.Models;
@@ -165,6 +166,7 @@ namespace FoodForThought.ViewModels
 					return;
 				}
 
+
 				var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
 				{
 					Directory = "Sample",
@@ -174,7 +176,7 @@ namespace FoodForThought.ViewModels
 				if (file == null)
 					return;
 
-				await Application.Current.MainPage.DisplayAlert("File Location", file.Path, "OK");
+				//await Application.Current.MainPage.DisplayAlert("File Location", file.Path, "OK");
 
 				//var imgData = ImageSource.FromStream(() =>
 				//{
@@ -184,9 +186,18 @@ namespace FoodForThought.ViewModels
 				//	return stream;
 				//});
 
+
 				var stream = file.GetStream();
 				file.Dispose();
+				byte[] imgData = ReadFully(stream);
 
+				var expiryDate = await App.CloudService.GetInformationForExpiry(imgData);
+
+				Device.BeginInvokeOnMainThread(() =>
+				{
+					Item.ExpiryDate = expiryDate;
+					OnPropertyChanged("Item");
+				});
 			}
 			catch (Exception ex)
 			{
@@ -195,6 +206,20 @@ namespace FoodForThought.ViewModels
 			finally
 			{
 				IsBusy = false;
+			}
+		}
+
+		public static byte[] ReadFully(Stream input)
+		{
+			byte[] buffer = new byte[16 * 1024];
+			using (MemoryStream ms = new MemoryStream())
+			{
+				int read;
+				while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+				{
+					ms.Write(buffer, 0, read);
+				}
+				return ms.ToArray();
 			}
 		}
 

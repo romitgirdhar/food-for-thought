@@ -33,7 +33,7 @@
 					Grid.Row="3" Grid.Column="2"/>
 			<Label Text="State:" Grid.Row="4" Grid.Column="0" />
 			<Picker x:Name="State" 
-					SelectedIndex="{Binding Item.StateFromText}" 
+					SelectedIndex="{Binding Item.StateFromText,Mode=TwoWay}" 
 					HorizontalOptions="FillAndExpand"
 					Grid.Row="4" Grid.Column="1">
 		        <Picker.Items>
@@ -46,7 +46,7 @@
 		    </Picker> 
 
 		    <Label Text="Expiry Date:" Grid.Row="5" Grid.Column="0" />
-			<Entry Text="{Binding Item.ExpiryDate}" Grid.Row="5" Grid.Column="1" />
+			<Entry Text="{Binding Item.ExpiryDateText}" Grid.Row="5" Grid.Column="1" />
 			<Button Image="camera.png" 
 					Command="{Binding TakePictureOfExpiryCommand}"
 					Grid.Row="5" Grid.Column="2"/>
