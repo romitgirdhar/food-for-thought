@@ -23,6 +23,7 @@ namespace fft_mobileapp.Controllers
         private DocumentClient client = new DocumentClient(new Uri(EndpointUri), PrimaryKey);
         private string databaseName = "groceries";
         private string groceryListCollection = "GroceryList";
+        private string stateTransitionCollection = "StateTransitions";
 
         [HttpGet]
         public HttpResponseMessage Get(String Id)
@@ -73,9 +74,72 @@ namespace fft_mobileapp.Controllers
              * If the grocery item doesn't exist, create it.
              * If it exists, then update it.
              */
+            FeedOptions queryOptions = new FeedOptions { MaxItemCount = -1 };
 
-            Document doc = await this.client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(databaseName, groceryListCollection), data);
-            Console.WriteLine("Created Document: ", doc);
+            IQueryable<GroceryItemRequest> groceryItemListQuery = this.client.CreateDocumentQuery<GroceryItemRequest>(
+                    UriFactory.CreateDocumentCollectionUri(databaseName, groceryListCollection), queryOptions)
+                    .Where(x => x.Id == data.Id);
+
+            Document doc = null;
+            if (groceryItemListQuery.ToList() == null || groceryItemListQuery.ToList().Count == 0)
+            {
+                doc = await this.client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(databaseName, groceryListCollection), data);
+                Console.WriteLine("Created Document: ", doc);
+            }
+            else
+            {
+                GroceryItemRequest groceryItemRequestOnDocument = groceryItemListQuery.ToList().First();
+                groceryItemRequestOnDocument.groceryItems = groceryItemRequestOnDocument.groceryItems.OrderBy(x => x.Name).ToList();
+                data.groceryItems = data.groceryItems.OrderBy(x => x.Name).ToList();
+
+                // Merge the 2 lists together
+                int dataCounter = 0, docCounter = 0;
+                List<GroceryItem> newList = new List<GroceryItem>(groceryItemRequestOnDocument.groceryItems.Count() + data.groceryItems.Count());
+                for(; docCounter < groceryItemRequestOnDocument.groceryItems.Count() && dataCounter < data.groceryItems.Count(); )
+                {
+                    if(groceryItemRequestOnDocument.groceryItems[docCounter].Name.Equals(data.groceryItems[dataCounter].Name))
+                    {
+                        groceryItemRequestOnDocument.groceryItems[docCounter].Quantity += data.groceryItems[dataCounter].Quantity;
+                        newList.Add(new GroceryItem(groceryItemRequestOnDocument.groceryItems[docCounter]));
+
+                        docCounter++;
+                        dataCounter++;
+                    }
+                    else if(groceryItemRequestOnDocument.groceryItems[docCounter].Name.CompareTo(data.groceryItems[dataCounter].Name) < 0)
+                    {
+                        newList.Add(new GroceryItem(groceryItemRequestOnDocument.groceryItems[docCounter]));
+                        docCounter++;
+                    }
+                    else if (groceryItemRequestOnDocument.groceryItems[docCounter].Name.CompareTo(data.groceryItems[dataCounter].Name) > 0)
+                    {
+                        newList.Add(new GroceryItem(data.groceryItems[dataCounter]));
+                        dataCounter++;
+                    }
+                }
+
+                while(dataCounter < data.groceryItems.Count())
+                {
+                    newList.Add(new GroceryItem(data.groceryItems[dataCounter]));
+                    dataCounter++;
+                }
+                
+                while(docCounter < groceryItemRequestOnDocument.groceryItems.Count())
+                {
+                    newList.Add(new GroceryItem(groceryItemRequestOnDocument.groceryItems[docCounter]));
+                    docCounter++;
+                }
+
+                groceryItemRequestOnDocument.groceryItems = newList;
+                try
+                {
+                    doc = await this.client.UpsertDocumentAsync(UriFactory.CreateDocumentCollectionUri(databaseName, groceryListCollection), groceryItemRequestOnDocument);
+                }
+                catch (DocumentClientException de)
+                {
+                    throw;
+                }
+
+            }
 
             return Request.CreateResponse(HttpStatusCode.OK, doc);
         }

@@ -6,6 +6,22 @@ namespace fft_mobileapp.DataObjects
 
 	public class GroceryItem
 	{		
+
+        public GroceryItem ()
+        {
+
+        }
+
+        public GroceryItem (GroceryItem dup)
+        {
+            this.Name = dup.Name;
+            this.State = dup.State;
+            this.StateDate = dup.StateDate;
+            this.Quantity = dup.Quantity;
+            this.ExpiryDate = dup.ExpiryDate;
+            this.PictureUrl = dup.PictureUrl;
+        }
+
 		public string Name { get; set; }
 		public GroceryState State { get; set; }
 		public DateTimeOffset? StateDate { get; set; }
