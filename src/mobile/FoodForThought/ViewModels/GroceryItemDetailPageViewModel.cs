@@ -176,14 +176,16 @@ namespace FoodForThought.ViewModels
 
 				await Application.Current.MainPage.DisplayAlert("File Location", file.Path, "OK");
 
-				var imgData = ImageSource.FromStream(() =>
-				{
-					var stream = file.GetStream();
-					file.Dispose();
-					return stream;
-				});
+				//var imgData = ImageSource.FromStream(() =>
+				//{
+				//	var stream = file.GetStream();
 
+				//	file.Dispose();
+				//	return stream;
+				//});
 
+				var stream = file.GetStream();
+				file.Dispose();
 
 			}
 			catch (Exception ex)

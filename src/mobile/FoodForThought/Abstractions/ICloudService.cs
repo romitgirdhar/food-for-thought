@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using FoodForThought.Models;
 using Microsoft.WindowsAzure.MobileServices;
@@ -12,6 +13,7 @@ namespace FoodForThought.Abstractions
 		ICloudTable<T> GetTable<T>() where T : TableData;
 
 		Task<UpcLookupResponse> GetInformationForUPC(string upc);
+		Task<ExpiryLookupResponse> GetInformationForExpiry(Stream fileStream);
 
 		Task<ICollection<GroceryItem>> GetGroceryItems(string userId); 
 		//Task<GroceryItem> GetGroceryItemById(string groceryItemId);

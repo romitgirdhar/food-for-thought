@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using FoodForThought.Abstractions;
@@ -37,6 +38,11 @@ namespace FoodForThought.Services
 
 			Debug.WriteLine("TestACS: " + response.ToString());
 			return response;
+		}
+
+		public async Task<ExpiryLookupResponse> GetInformationForExpiry(Stream fileStream)
+		{
+			return null;
 		}
 
 		public async Task<ICollection<GroceryItem>> GetGroceryItems(string userId)

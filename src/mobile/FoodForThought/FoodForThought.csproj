@@ -111,6 +111,7 @@
     <Compile Include="ViewModels\MenuPageViewModel.cs" />
     <Compile Include="Models\GetGroceryItemsResponse.cs" />
     <Compile Include="Models\AddGroceryItemRequest.cs" />
+    <Compile Include="Models\ExpiryLookupResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System.Net.Http">

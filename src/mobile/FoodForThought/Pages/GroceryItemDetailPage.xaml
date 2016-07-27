@@ -52,6 +52,14 @@
 					Grid.Row="5" Grid.Column="2"/>
 			
 		    <Label x:Name="lblWarnName" Text="{Binding WarnInfo}" Grid.Row="6" Grid.Column="1" TextColor="Red" />
+
+			<ActivityIndicator HorizontalOptions="End"
+                                   IsRunning="{Binding IsBusy,
+                                                       Mode=OneWay}"
+                                   VerticalOptions="Center"
+                                   Color="Black" 
+				Grid.Row="7" Grid.Column="0"/>
+			
 			<Button Text="Save Item" 
 					Command="{Binding SaveItemCommand}"
 					Grid.Row="7" Grid.Column="1"/>
