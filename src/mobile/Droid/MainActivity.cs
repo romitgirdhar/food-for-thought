@@ -9,6 +9,7 @@ using Android.Widget;
 using Android.OS;
 
 using Gcm.Client;
+using Plugin.Media;
 
 namespace FoodForThought.Droid
 {
@@ -39,6 +40,7 @@ namespace FoodForThought.Droid
 
 			Microsoft.WindowsAzure.MobileServices.CurrentPlatform.Init();
 			ZXing.Net.Mobile.Forms.Android.Platform.Init();
+			//CrossMedia.Current.Initialize();
 
 			global::Xamarin.Forms.Forms.Init(this, bundle);
 

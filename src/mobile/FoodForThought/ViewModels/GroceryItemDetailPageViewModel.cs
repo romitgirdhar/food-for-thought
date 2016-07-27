@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using FoodForThought.Abstractions;
 using FoodForThought.Models;
 using FoodForThought.Pages;
+using Plugin.Media;
 using Xamarin.Forms;
 using ZXing.Net.Mobile.Forms;
 
@@ -131,6 +132,56 @@ namespace FoodForThought.ViewModels
 				//await Navigation.PushAsync(scanPage);
 				var master = (MasterPage)Application.Current.MainPage;
 				await master.Detail.Navigation.PushAsync(scanPage);
+
+
+
+			}
+			catch (Exception ex)
+			{
+				Debug.WriteLine($"[GroceryItemDetailPage] Error in AddNewItem: {ex.Message}");
+			}
+			finally
+			{
+				IsBusy = false;
+			}
+		}
+
+		Command takePictureExpiryCmd;
+		public Command TakePictureOfExpiryCommand => takePictureExpiryCmd ?? (takePictureExpiryCmd = new Command(async () => await ExecuteTakePictureOfExpiryCommand()));
+
+		async Task ExecuteTakePictureOfExpiryCommand()
+		{
+			if (IsBusy)
+				return;
+			IsBusy = true;
+
+			try
+			{
+				await CrossMedia.Current.Initialize();
+
+				if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
+				{
+					Application.Current.MainPage.DisplayAlert("No Camera", ":( No camera available.", "OK");
+					return;
+				}
+
+				var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
+				{
+					Directory = "Sample",
+					Name = "test.jpg"
+				});
+
+				if (file == null)
+					return;
+
+				await Application.Current.MainPage.DisplayAlert("File Location", file.Path, "OK");
+
+				var imgData = ImageSource.FromStream(() =>
+				{
+					var stream = file.GetStream();
+					file.Dispose();
+					return stream;
+				});
 
 
 
