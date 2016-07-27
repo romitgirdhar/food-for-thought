@@ -95,7 +95,16 @@ namespace FoodForThought.Services
 				id = userId,
 				groceryItems = new List<GroceryItem>() { item }
 			};
-			var response = await client.InvokeApiAsync<AddGroceryItemRequest, JToken>("Grocery", request, HttpMethod.Post, null);
+			HttpMethod method = HttpMethod.Post;
+			if (item.StateDate.HasValue)
+			{
+				method = HttpMethod.Put;
+			}
+			else {
+				item.StateDate = DateTime.Now;
+			}
+
+			var response = await client.InvokeApiAsync<AddGroceryItemRequest, JToken>("Grocery", request, method, null);
 			return response;
 		}
 
