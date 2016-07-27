@@ -63,8 +63,8 @@ namespace FoodForThought.Services
 
 		public async void UpdateTags(JArray tags)
 		{
-			var response = await client.InvokeApiAsync("UpdateTags/" + client.InstallationId, tags);
-			Debug.WriteLine("update tags: " + response.ToString());
+			await client.InvokeApiAsync("UpdateTags/" + client.InstallationId, tags);
+			//Debug.WriteLine("update tags: " + response.ToString());
 		}
 
 		//public async Task<GroceryItem> GetGroceryItemById(string groceryItemId)
