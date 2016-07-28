@@ -95,7 +95,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Azure.NotificationHubs, Version=2.16.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Azure.NotificationHubs.1.0.2\lib\net45-full\Microsoft.Azure.NotificationHubs.dll</HintPath>
+      <HintPath>..\packages\Microsoft.Azure.NotificationHubs.1.0.6\lib\net45-full\Microsoft.Azure.NotificationHubs.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Data.Edm, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -194,6 +194,7 @@
     <Compile Include="App_Start\Startup.MobileApp.cs" />
     <Compile Include="Classes\UPCLookupResponse.cs" />
     <Compile Include="Controllers\ExpiryDateController.cs" />
+    <Compile Include="Controllers\ExpiryNotificationController.cs" />
     <Compile Include="Controllers\FoodExpiryLookupItemController.cs" />
     <Compile Include="Controllers\GroceryController.cs" />
     <Compile Include="Controllers\RecipeController.cs" />

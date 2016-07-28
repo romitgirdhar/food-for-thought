@@ -1,0 +1,9 @@
+{
+  "frameworks": {
+    "net452":{
+      "dependencies": {
+        "Microsoft.Azure.DocumentDB": "1.9.2"
+      }
+    }
+   }
+}
